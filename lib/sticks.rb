@@ -1,11 +1,12 @@
 class Game
 
-  attr_reader :players
-  attr_reader :sticks
+  attr_reader :players, :sticks, :remaining_sticks
 
   def initialize(players, sticks)
     @players = players
     @sticks = sticks
+    @game_mode = ["player_vs_player", "player_vs_machine"]
+    @remaining_sticks = @sticks
   end
 
   def random_start()
@@ -15,15 +16,14 @@ class Game
 
   def number_of_players(players)
     if players.to_i == 2 or players.upcase == "TWO"
-
+      game_mode = @game_mode[0]
     elsif players.to_i == 1 or players.upcase == "ONE"
-      @game_mode = "player_vs_machine"
-
+      game_mode = @game_mode[1]
     end
-    @game_mode
+      game_mode
   end
 
-  def number_of_sticks(number)
+  def lay_down_sticks(number)
     sticks = 10..100
     if sticks.include? number.to_i
        number.to_i
@@ -31,13 +31,18 @@ class Game
     end
   end
 
-  def turns(input)
-    turn = 1..3
-    if turn.include? input.to_i
+  def pick_up_sticks(input)
+    valid_number_of_sticks = 1..3
+    if valid_number_of_sticks.include? input.to_i
        input.to_i
     else
        puts "Please enter a number between 1 and 3."
     end
+  end
+
+  def play_sticks(input)
+    @remaining_sticks = (sticks - pick_up_sticks(input))
+    remaining_sticks
   end
 
 end

@@ -40,32 +40,43 @@ describe '#number_of_players' do
   end
 end
 
-describe '#number_of_sticks' do
+describe '#lay_down_sticks' do
   context 'number of sticks when beginning a game' do
     it 'validates the number sticks' do
       game = Game.new(2, 20)
 
       input = "10"
 
-      expect(game.number_of_sticks(input)).to eq 10
+      expect(game.lay_down_sticks(input)).to eq 10
 
     end
   end
 end
 
-describe '#turns' do
-  context 'during the game the turns each player gets will be decrmented' do
-    it 'subtracts turns based on the number of sticks a player picks up' do
+describe '#pick_up_sticks' do
+  context 'during player\'s turn, number of sticks allowed to pick up.' do
+    it 'returns number of sticks chosen.' do
       game = Game.new(2, 20)
 
-      input = 2
+      input = "2"
 
-      expect(game.turns(input)).to eq 2
+      expect(game.pick_up_sticks(input)).to eq 2
 
     end
   end
 end
 
+describe '#play_sticks' do
+  context ' during game' do
+    it 'subtract the number of played sticks from total sticks' do
+      game = Game.new(2, 20)
+
+      input = "2"
+
+      expect(game.play_sticks (input)).to eq 18
+    end
+  end
+end
 
 # Decide on the data structure(s) that you are going to need to use to represent the state of the game when played.
 # Decide on the tasks that will be part of the game loop.
